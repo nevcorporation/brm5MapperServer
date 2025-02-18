@@ -10,8 +10,12 @@ app.use(cors());
 
 app.use(express.json());
 
-app.get("/messages", (req, res) => {
+app.get("/data", (req, res) => {
     res.json(messages);
+})
+
+app.post("/data", (req, res) => {
+    
 })
 
 
