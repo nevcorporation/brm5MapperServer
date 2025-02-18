@@ -4,7 +4,7 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-const messages = ['heydude']
+const messages = ['heydude'];
 
 app.use(cors());
 
@@ -15,7 +15,9 @@ app.get("/data", (req, res) => {
 })
 
 app.post("/data", (req, res) => {
-    
+    const { message } = req.body;
+    messages.push(message);
+    res.json(message);
 })
 
 
