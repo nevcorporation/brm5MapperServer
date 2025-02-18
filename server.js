@@ -16,10 +16,8 @@ app.get("/data", (req, res) => {
 
 app.post("/data", (req, res) => {
     const { message } = req.body;
-    if(messages && messages.trim(',')) {
-        messages.push(message);
-        res.json(message);
-    }
+    messages.push(message);
+    res.json(message);
 })
 
 
