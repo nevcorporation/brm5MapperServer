@@ -6,31 +6,36 @@ const port = process.env.PORT || 3000;
 
 const messages = [
     {
-        "code":"0000",
-        "texts": [
-            "hey"
-        ]
+        "code": "0000",
+        "texts": ["hey"]
     }
 ];
 
 app.use(cors());
-
 app.use(express.json());
 
+// Get all messages
 app.get("/data", (req, res) => {
     res.json(messages);
-})
+});
 
 app.post("/data", (req, res) => {
     const { code, texts } = req.body;
 
-    const newMessage = {code, texts: texts || []};
-    messages.push(newMessage);
-    res.json(newMessage);
-    
-})
+    let found = messages.find(entry => entry.code === code);
 
+    if (found) {
+        if (texts && texts.length > 0) {
+            found.texts.push(...texts);
+        }
+        res.json({ message: "Updated existing session", updatedEntry: found });
+    } else {
+        const newMessage = { code, texts: texts || [] };
+        messages.push(newMessage);
+        res.json({ message: "Created new session", newEntry: newMessage });
+    }
+});
 
 app.listen(port, () => {
-    console.log(`server hosted on ${port}`);
-})
+    console.log(`Server hosted on port ${port}`);
+});
