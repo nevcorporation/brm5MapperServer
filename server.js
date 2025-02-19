@@ -30,11 +30,12 @@ app.post("/data", (req, res) => {
         }
         res.json({ message: "Updated existing session", updatedEntry: found });
     } else {
-        const newMessage = { code, texts: texts || [] };
+        const newMessage = { code: code, texts: texts || [] }; // Ensure "code" is included
         messages.push(newMessage);
         res.json({ message: "Created new session", newEntry: newMessage });
     }
 });
+
 
 app.listen(port, () => {
     console.log(`Server hosted on port ${port}`);
