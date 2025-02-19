@@ -4,7 +4,7 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-const messages = ['heydude'];
+const messages = ['heydude','cool'];
 
 app.use(cors());
 
