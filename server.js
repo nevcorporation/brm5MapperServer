@@ -8,7 +8,7 @@ const messages = [
     {
         "code":"0000",
         "texts": [
-            
+
         ]
     }
 ];
@@ -22,9 +22,11 @@ app.get("/data", (req, res) => {
 })
 
 app.post("/data", (req, res) => {
-    const { message } = req.body;
-        messages.push(message);
-        res.json(message);
+    const { code, texts } = req.body;
+
+    const newMessage = {code, texts: texts || []};
+    messages.push(newMessage);
+    res.json(newMessage);
     
 })
 
