@@ -16,8 +16,13 @@ app.get("/data", (req, res) => {
 
 app.post("/data", (req, res) => {
     const { message } = req.body;
-    messages.push(message);
-    res.json(message);
+    if(message && message.trim()) {
+        messages.push(message);
+        res.json(message);
+    } else {
+        res.status(200).send('ERROR');
+    }
+    
 })
 
 
