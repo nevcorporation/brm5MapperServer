@@ -29,23 +29,34 @@ app.get("/data", (req, res) => {
 app.post("/data", (req, res) => {
     const { code, texts, markers } = req.body;
 
+    if (!code) {
+        return res.status(400).json({ error: "Code is required" });
+    }
+
     let found = messages.find(entry => entry.code === code);
 
     if (found) {
         if (texts && texts.length > 0) {
             found.texts.push(...texts);
         }
-        if (markers && markers.length > 0) { // FIXED: Append new markers
-            found.markers.push(...markers);
+
+        if (markers && markers.length > 0) {
+            markers.forEach(marker => {
+                // Check if marker already exists
+                const exists = found.markers.some(
+                    existing => existing.top === marker.top && existing.left === marker.left
+                );
+                if (!exists) {
+                    found.markers.push(marker);
+                }
+            });
         }
-        res.json({ message: "Updated existing session", updatedEntry: found });
+
+        return res.json({ message: "Updated existing session", updatedEntry: found });
     } else {
-        if (!code) {
-            return res.status(400).json({ error: "Code is required" }); // FIXED: Handle missing code
-        }
         const newMessage = { code: code, texts: texts || [], markers: markers || [] };
         messages.push(newMessage);
-        res.json({ message: "Created new session", newEntry: newMessage });
+        return res.json({ message: "Created new session", newEntry: newMessage });
     }
 });
 
