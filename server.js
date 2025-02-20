@@ -7,7 +7,14 @@ const port = process.env.PORT || 3000;
 const messages = [
     {
         "code": "0000",
-        "texts": ["hey"]
+        "texts": ["hey"],
+        "markers": [
+            {
+                "name":"sigma",
+                "top":"10%",
+                "left":"10%"
+            }
+        ]
     }
 ];
 
@@ -20,7 +27,7 @@ app.get("/data", (req, res) => {
 });
 
 app.post("/data", (req, res) => {
-    const { code, texts } = req.body;
+    const { code, texts, markers } = req.body;
 
     let found = messages.find(entry => entry.code === code);
 
@@ -30,7 +37,7 @@ app.post("/data", (req, res) => {
         }
         res.json({ message: "Updated existing session", updatedEntry: found });
     } else {
-        const newMessage = { code: code, texts: texts || [] }; // Ensure "code" is included
+        const newMessage = { code: code, texts: texts || [], markers: markers || []  }; // Ensure "code" is included
         messages.push(newMessage);
         res.json({ message: "Created new session", newEntry: newMessage });
     }
@@ -40,3 +47,5 @@ app.post("/data", (req, res) => {
 app.listen(port, () => {
     console.log(`Server hosted on port ${port}`);
 });
+
+
