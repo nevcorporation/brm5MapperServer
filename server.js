@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 const messages = [
     {
         "code": "0000",
-        "texts": ["hey"],
+        "texts": ["Connected"],
         "markers": [
             {
                 "top": "50px",
