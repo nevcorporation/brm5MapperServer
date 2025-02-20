@@ -10,9 +10,8 @@ const messages = [
         "texts": ["hey"],
         "markers": [
             {
-                "name":"sigma",
-                "top":"10%",
-                "left":"10%"
+                "top":"50px",
+                "left":"1000px"
             }
         ]
     }
